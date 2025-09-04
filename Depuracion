@@ -1,0 +1,16 @@
+;Depuracion
+nasm -f elf64 -g ejemplo_gdb.asm -o ejemplo_gdb.o
+ld ejemplo_gdb.o -o ejemplo_gdb
+gdb ejemplo_gdb
+FIJAR PUNTO DE QUIEBRE:
+break _start
+b 23
+info break
+delete 2 3
+run
+set disassembly-flavor Intel
+disassemble
+info “lo que quieres”
+x/i $pc
+•	Para ejecutar la siguiente instrucción:
+ni
