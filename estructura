@@ -1,0 +1,30 @@
+
+
+; nasm -f elf64 helloworld.asm -o helloworld.o
+; ld helloworld.o -o helloworld
+; ./helloworld
+
+section .data    
+    ; valores iniciales
+	message db "Hello World",10 
+	len equ $ - message               
+
+
+section .text
+	global _start
+
+_start:
+
+    ; Para escribir 
+	mov rax, 1
+	mov rdi, 1
+	mov rsi, message        ;mensaje
+	mov rdx, len            ; longitud del mensaje
+	syscall
+    
+;Para terminar el programa
+_end:
+	mov rax, 60
+	mov rdi, 0
+	syscall
+
