@@ -1,0 +1,58 @@
+
+section .data
+	datos dw 1,1,1,15,15,14,13
+	len equ $ - datos   ;saber la cantidad de datos
+
+section .text
+	global _start
+
+_start:
+
+	mov	rbx, 0       ;para el contador
+	mov r9, 0        ;contador de datos
+	mov r10w, 0      ;contador de indice
+	mov	ax, [datos]  ;guardamos el valor del dato actual
+	mov r11, 0      ;guardar valor máximo
+	mov r8w, [datos]  
+	mov rsi, 0
+
+_inc_dato:
+	mov rbx, 0
+	mov r9, 0
+	mov ax, [datos+rsi*2]
+	inc rsi
+	cmp rsi, rdx
+	jl _contar_cantidad
+
+
+_contar_cantidad:
+	mov r8w, [datos+rbx*2]
+	cmp ax, r8w
+	je _contador_valores
+	
+_countloop:
+	
+	mov rdx, 7
+	inc rbx
+	cmp rbx, rdx
+	jl _contar_cantidad
+	jmp _inc_dato
+
+_contador_valores:
+	inc r9          ;guardar r9 con un valor muy grande
+	jmp _countloop
+
+
+_compara_max_valor:
+	cmp r9, r11
+	jg _guarda_max_valor
+	mov r11, r9
+
+
+_guarda_max_valor:
+	mov r12, r9  ;tener valor maximo
+
+_exit:
+	mov	rax, 60
+	mov	rdi, 0
+	syscall
