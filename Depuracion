@@ -1,6 +1,6 @@
 ;Depuracion
-nasm -f elf64 -g ejemplo_gdb.asm -o ejemplo_gdb.o
-ld ejemplo_gdb.o -o ejemplo_gdb
+nasm -f elf64 ejemplo_gdb.asm -o ejemplo_gdb.o -g
+ld ejemplo_gdb.o -o ejemplo_gdb -g
 gdb ejemplo_gdb
 FIJAR PUNTO DE QUIEBRE:
 break _start
