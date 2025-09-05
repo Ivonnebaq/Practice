@@ -1,0 +1,52 @@
+
+; nasm -f elf64 helloworld.asm -o helloworld.o
+; ld helloworld.o -o helloworld
+; ./helloworld
+
+section .data    
+    num dw 11,12,13,15,20,35,24,56,67,23,90            
+
+section .text
+	global _start
+
+_start:
+    mov r12w, 0
+    mov r15w, [num]
+    mov r8w, 0  ;para contar pares
+    mov r9w, 0  ;para contar impares
+    mov r10, 0 ;contador
+    
+
+_par_impar:
+
+    mov ax, r15w
+    mov cx, 2    ; ax/2
+    div cx       ; ax= cociente, dx=residuo
+    mov r11w, dx ;creamos copia del residuo
+    mov ax, 0    ; devolvemos valor a 0
+
+    cmp r11w, 0
+    je _pares
+
+    cmp r11w, 1
+    je _impares
+
+_pares:
+    inc r8w
+    jmp _incrementar
+
+_impares:
+    inc r9w
+    jmp _incrementar
+
+_incrementar:
+    inc r10
+    cmp r10, 10
+    mov r15w, [num+r10*2] ;r10 es de 64 bits porque se multiplica y no se permite de 16 bits
+    jl _par_impar
+
+;Para terminar el programa
+_end:
+	mov rax, 60
+	mov rdi, 0
+	syscall
